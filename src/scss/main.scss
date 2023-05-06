@@ -1,0 +1,23 @@
+// Bulma vars
+// @import "~bulma/sass/utilities/_all";
+
+// Buefy vars
+@import "./utils/all";
+
+// Bulma
+@import "~module/bulma/bulma";
+
+// MDI
+$mdi-font-path: "~module/@mdi/font/fonts";
+@import "~module/@mdi/font/scss/materialdesignicons";
+
+// FontAwesome
+// $fa-font-path: "~font-awesome/fonts";
+// @import "~font-awesome/scss/font-awesome";
+
+// FontAwesome 5
+$fa-font-path: "~module/@fortawesome/fontawesome-free/webfonts";
+@import "~module/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~module/@fortawesome/fontawesome-free/scss/regular";
+@import "~module/@fortawesome/fontawesome-free/scss/solid";
+@import "~module/@fortawesome/fontawesome-free/scss/brands";

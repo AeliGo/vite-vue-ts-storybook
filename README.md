@@ -1,7 +1,6 @@
 # Vue 3 + i18n + Typescript + Vite + Storybook + ESLint + Prettier
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
-The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
 ## Create stories with Typescript
 
@@ -24,7 +23,7 @@ Change config at `.prettierrc`
 
 ```js
 yarn // installs packages
-yarn vite // starts the dev server
+yarn dev // starts the dev server
 yarn build // run build
 yarn serve // preview build
 yarn storybook // starts storybook
@@ -61,13 +60,8 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 ├── src
 │   ├── App.vue
 │   ├── assets
-│   │   └── fonts
-│   │       └── overpass-regular.otf
 │   ├── components
-│   │   ├── HelloWorld.vue
-│   │   └── LocaleSelect.vue
-│   ├── data
-│   │   └── links.json
+│   │   └── Icon
 │   ├── locales
 │   │   ├── en.json
 │   │   ├── pt.json
@@ -75,13 +69,7 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 │   ├── main.ts
 │   ├── shims-vue.d.ts
 │   ├── stories
-│   │   ├── BasicButton.stories.ts
-│   │   ├── BasicButton.vue
-│   │   ├── Header.stories.js
-│   │   ├── Header.vue
 │   │   ├── Introduction.stories.mdx
-│   │   ├── Page.stories.js
-│   │   ├── Page.vue
 │   │   ├── assets
 │   │   │   ├── code-brackets.svg
 │   │   │   ├── colors.svg
@@ -91,12 +79,8 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 │   │   │   ├── plugin.svg
 │   │   │   ├── repo.svg
 │   │   │   └── stackalt.svg
-│   │   ├── header.css
-│   │   └── page.css
 │   ├── styles
 │   │   ├── _colors.scss
-│   │   ├── _font.scss
-│   │   ├── _reset.scss
 │   │   ├── boot.scss
 │   │   └── functions
 │   │       └── _color.scss

@@ -3,7 +3,7 @@ import { Comment, Fragment, Static, Text } from "vue";
 /**
  * +/- function to native math sign
  */
-function signPoly(value) {
+function signPoly(value: number) {
   if (value < 0) return -1;
   return value > 0 ? 1 : 0;
 }

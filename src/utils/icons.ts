@@ -1,5 +1,5 @@
-import config from "../utils/config";
-import { merge } from "../utils/helpers";
+import config from "./config";
+import { merge } from "./helpers";
 
 const mdiIcons = {
   sizes: {

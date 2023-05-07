@@ -16,8 +16,9 @@
 </template>
 
 <script>
-import config from "../../utils/config";
-import getIcons from "../../utils/icons";
+import { ref, computed } from "vue";
+import config from "@/utils/config";
+import getIcons from "@/utils/icons";
 
 export default {
   name: "BIcon",
@@ -29,39 +30,28 @@ export default {
     size: String,
     customSize: String,
     customClass: String,
-    both: Boolean, // This is used internally to show both MDI and FA icon
+    both: Boolean,
   },
-  computed: {
-    iconConfig() {
-      const allIcons = getIcons();
-      return allIcons[this.newPack];
-    },
-    iconPrefix() {
-      if (this.iconConfig && this.iconConfig.iconPrefix) {
-        return this.iconConfig.iconPrefix;
-      }
-      return "";
-    },
-    /**
-     * Internal icon name based on the pack.
-     * If pack is 'fa', gets the equivalent FA icon name of the MDI,
-     * internal icons are always MDI.
-     */
-    newIcon() {
-      return `${this.iconPrefix}${this.getEquivalentIconOf(this.icon)}`;
-    },
-    newPack() {
-      return this.pack || config.defaultIconPack;
-    },
-    newType() {
-      if (!this.type) return;
+  setup(props) {
+    const newPack = ref(props.pack || config.defaultIconPack);
+    const allIcons = computed(() => getIcons()[newPack.value]);
+    const iconPrefix = computed(() =>
+      allIcons.value && allIcons.value.iconPrefix
+        ? allIcons.value.iconPrefix
+        : ""
+    );
+    const newIcon = computed(
+      () => `${iconPrefix.value}${getEquivalentIconOf(props.icon)}`
+    );
+    const newType = computed(() => {
+      if (!props.type) return;
 
       let splitType = [];
-      if (typeof this.type === "string") {
-        splitType = this.type.split("-");
+      if (typeof props.type === "string") {
+        splitType = props.type.split("-");
       } else {
-        for (const key in this.type) {
-          if (this.type[key]) {
+        for (const key in props.type) {
+          if (props.type[key]) {
             splitType = key.split("-");
             break;
           }
@@ -71,43 +61,50 @@ export default {
 
       const [, ...type] = splitType;
       return `has-text-${type.join("-")}`;
-    },
-    newCustomSize() {
-      return this.customSize || this.customSizeByPack;
-    },
-    customSizeByPack() {
-      if (this.iconConfig && this.iconConfig.sizes) {
-        if (this.size && this.iconConfig.sizes[this.size] !== undefined) {
-          return this.iconConfig.sizes[this.size];
-        } else if (this.iconConfig.sizes.default) {
-          return this.iconConfig.sizes.default;
+    });
+    const customSizeByPack = computed(() => {
+      if (allIcons.value && allIcons.value.sizes) {
+        if (props.size && allIcons.value.sizes[props.size] !== undefined) {
+          return allIcons.value.sizes[props.size];
+        } else if (allIcons.value.sizes.default) {
+          return allIcons.value.sizes.default;
         }
       }
       return null;
-    },
-    useIconComponent() {
-      return this.component || config.defaultIconComponent;
-    },
-  },
-  methods: {
-    /**
-     * Equivalent icon name of the MDI.
-     */
-    getEquivalentIconOf(value) {
-      // Only transform the class if the both prop is set to true
-      if (!this.both) {
+    });
+    const newCustomSize = computed(
+      () => props.customSize || customSizeByPack.value
+    );
+    const useIconComponent = computed(
+      () => props.component || config.defaultIconComponent
+    );
+
+    function getEquivalentIconOf(value) {
+      if (!props.both) {
         return value;
       }
 
       if (
-        this.iconConfig &&
-        this.iconConfig.internalIcons &&
-        this.iconConfig.internalIcons[value]
+        allIcons.value &&
+        allIcons.value.internalIcons &&
+        allIcons.value.internalIcons[value]
       ) {
-        return this.iconConfig.internalIcons[value];
+        return allIcons.value.internalIcons[value];
       }
       return value;
-    },
+    }
+
+    return {
+      newPack,
+      allIcons,
+      iconPrefix,
+      newIcon,
+      newType,
+      customSizeByPack,
+      newCustomSize,
+      useIconComponent,
+      getEquivalentIconOf,
+    };
   },
 };
 </script>

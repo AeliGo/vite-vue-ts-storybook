@@ -4,7 +4,6 @@
       v-if="!useIconComponent"
       :class="[newPack, newIcon, newCustomSize, customClass]"
     />
-
     <component
       v-else
       :is="useIconComponent"
@@ -16,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import config from "@/utils/config";
 import getIcons from "@/utils/icons";
 
@@ -33,20 +32,15 @@ export default {
     both: Boolean,
   },
   setup(props) {
-    const newPack = ref(props.pack || config.defaultIconPack);
+    const newPack = ref<string>(config.defaultIconPack);
+    const newIcon = ref<string>("");
     const allIcons = computed(() => getIcons()[newPack.value]);
-    const iconPrefix = computed(() =>
-      allIcons.value && allIcons.value.iconPrefix
-        ? allIcons.value.iconPrefix
-        : ""
-    );
-    const newIcon = computed(
-      () => `${iconPrefix.value}${getEquivalentIconOf(props.icon)}`
-    );
+    const iconPrefix = computed(() => allIcons.value?.iconPrefix ?? "");
+
     const newType = computed(() => {
       if (!props.type) return;
 
-      let splitType = [];
+      let splitType: string[] = [];
       if (typeof props.type === "string") {
         splitType = props.type.split("-");
       } else {
@@ -63,7 +57,7 @@ export default {
       return `has-text-${type.join("-")}`;
     });
     const customSizeByPack = computed(() => {
-      if (allIcons.value && allIcons.value.sizes) {
+      if (allIcons.value?.sizes) {
         if (props.size && allIcons.value.sizes[props.size] !== undefined) {
           return allIcons.value.sizes[props.size];
         } else if (allIcons.value.sizes.default) {
@@ -76,23 +70,31 @@ export default {
       () => props.customSize || customSizeByPack.value
     );
     const useIconComponent = computed(
-      () => props.component || config.defaultIconComponent
+      () => props.component ?? config.defaultIconComponent
     );
 
-    function getEquivalentIconOf(value) {
+    function getEquivalentIconOf(value: string) {
       if (!props.both) {
         return value;
       }
 
-      if (
-        allIcons.value &&
-        allIcons.value.internalIcons &&
-        allIcons.value.internalIcons[value]
-      ) {
+      if (allIcons.value?.internalIcons?.[value]) {
         return allIcons.value.internalIcons[value];
       }
       return value;
     }
+
+    watchEffect(() => {
+      if (props.pack) {
+        newPack.value = props.pack;
+      }
+    });
+
+    watchEffect(() => {
+      if (props.icon) {
+        newIcon.value = `${iconPrefix.value}${getEquivalentIconOf(props.icon)}`;
+      }
+    });
 
     return {
       newPack,

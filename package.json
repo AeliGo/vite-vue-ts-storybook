@@ -10,7 +10,8 @@
     "build:storybook": "build-storybook",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
-    "test": "jest"
+    "test": "jest",
+    "type-check": "tsc"
   },
   "keywords": [
     "bulma",

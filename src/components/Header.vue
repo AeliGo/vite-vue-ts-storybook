@@ -1,15 +1,25 @@
 <template>
   <div class="header">
-    <div class="title">Vite2.x + Vue3.x + TypeScript Starter</div>
+    <div class="title">{{ newType }}</div>
     <div class="go-github" @click="goGitHub">
       <i class="icon el-icon-s-promotion"></i> GitHub
     </div>
   </div>
 </template>
-
 <script lang="ts" setup>
-// eslint-disable-next-line no-unused-vars
-const goGitHub = () => {
+import { defineProps, reactive } from "vue";
+
+const props = defineProps<{
+  type?: string;
+}>();
+
+const { newType } = reactive<{
+  newType: string;
+}>({
+  newType: props.type || "",
+});
+
+function goGitHub() {
   window.open("https://github.com");
-};
+}
 </script>

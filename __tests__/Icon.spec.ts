@@ -5,7 +5,7 @@ import BIcon from "../src/components/Icon/Icon.vue";
 describe("BIcon", () => {
   it("render icon when icon property is passed", () => {
     const wrapper = mount(BIcon, {
-      propsData: { icon: "eye" },
+      props: { icon: "eye" },
     });
 
     expect(wrapper.classes()).toContain("icon");
@@ -14,7 +14,7 @@ describe("BIcon", () => {
 
   it("render a colored icon when type is passed", () => {
     const wrapper = mount(BIcon, {
-      propsData: {
+      props: {
         icon: "eye",
         type: "is-primary",
       },

@@ -37,7 +37,7 @@ const faIcons = () => {
 };
 
 const getIcons = () => {
-  let icons = {
+  let icons: any = {
     mdi: mdiIcons,
     fa: faIcons(),
     fas: faIcons(),

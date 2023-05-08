@@ -15,7 +15,7 @@
   </span>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, computed } from "vue";
 import config from "@/utils/config";
 import getIcons from "@/utils/icons";

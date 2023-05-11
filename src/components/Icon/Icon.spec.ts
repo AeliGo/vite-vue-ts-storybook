@@ -1,5 +1,4 @@
 import { shallowMount } from "@vue/test-utils";
-// @ts-ignore
 import BIcon from "../../components/Icon/Icon.vue";
 
 describe("BIcon", () => {
